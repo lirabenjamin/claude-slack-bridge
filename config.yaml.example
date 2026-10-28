@@ -1,0 +1,36 @@
+# Copy to config.yaml and edit. Restart the bridge after changes.
+
+# Slack channel name (no leading #) -> absolute path of the repo Claude works in.
+# A message in #survey-app runs Claude with that repo as its working directory.
+channels:
+  survey-app: "~/code/survey-app"
+  analysis:   "~/code/analysis-pipeline"
+
+# Working directory for channels not listed above, and for DMs to the bot (must exist).
+default_dir: ~/code/scratch
+dm_dir: ~/code/scratch
+
+# Channels shared with people who also talk to each other: the bot only answers
+# when @-mentioned or when the message starts with "claude:".
+mention_only_channels: []
+
+# Optional allowlists. When a list is non-empty, the bridge ignores everyone else.
+# Use Slack IDs (user IDs start with U or W; channel IDs with C, G or D).
+# Find them in Slack: profile > "Copy member ID"; channel details > bottom of the About tab.
+# If you set allowed_channels, DMs only work for DM channel IDs you list here.
+allowed_users: []      # e.g. ["UXXXXXXXXXX", "UYYYYYYYYYY"]
+allowed_channels: []   # e.g. ["CXXXXXXXXXX"]
+
+# Permissions for each Claude Code run.
+#   skip_permissions: true  -> claude --dangerously-skip-permissions (Claude can run anything).
+#   skip_permissions: false -> claude --permission-mode <permission_mode>.
+# Valid modes: acceptEdits, auto, bypassPermissions, manual, dontAsk, plan.
+# With acceptEdits, Claude can edit files but shell commands are denied unless you
+# allow them in the repo's .claude/settings.json ("permissions": {"allow": [...]}).
+skip_permissions: false
+permission_mode: acceptEdits
+
+# Pip web UI (optional dashboard of threads, served by the bridge process).
+pip_host: 127.0.0.1   # keep on localhost; expose it with cloudflared if needed
+pip_port: 8765
+pip_username: pip     # display name for messages sent from Pip into Slack

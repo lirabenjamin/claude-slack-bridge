@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd agent for the bridge. Copy to ~/Library/LaunchAgents/com.example.claude-slack-bridge.plist,
+  then replace every REPO_DIR with the absolute path of this repo and every HOME_DIR with your
+  home directory (launchd does not expand ~ or $HOME).
+-->
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>CLAUDE_BIN</key>
+		<string>HOME_DIR/.local/bin/claude</string>
+		<key>PATH</key>
+		<string>HOME_DIR/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.example.claude-slack-bridge</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>REPO_DIR/bin/run_bridge.sh</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>REPO_DIR/bridge.stderr.log</string>
+	<key>StandardOutPath</key>
+	<string>REPO_DIR/bridge.stdout.log</string>
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+	<key>WorkingDirectory</key>
+	<string>REPO_DIR</string>
+</dict>
+</plist>

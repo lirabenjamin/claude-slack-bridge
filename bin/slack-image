@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""Upload a file (image, pdf, etc.) to the current Slack thread.
+
+Usage:
+    slack-image path/to/chart.png
+    slack-image path/to/chart.png "the key result from pilot 2"
+"""
+import os
+import sys
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+# Re-run under the repo's venv so slack_sdk and dotenv are importable.
+VENV_PY = ROOT / ".venv" / "bin" / "python"
+if VENV_PY.exists() and pathlib.Path(sys.prefix).resolve() != VENV_PY.parent.parent.resolve():
+    os.execv(str(VENV_PY), [str(VENV_PY), __file__, *sys.argv[1:]])
+sys.path.insert(0, str(ROOT))
+from slack_helpers import upload_image
+
+args = sys.argv[1:]
+if not args:
+    sys.exit("usage: slack-image <path> [caption]")
+path = args[0]
+caption = " ".join(args[1:]) if len(args) > 1 else None
+upload_image(path, caption)

@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+"""Post a text message to the current Slack thread (mid-run interim update).
+
+Usage:
+    slack-post "halfway done with the analysis"
+    echo "long text" | slack-post -
+"""
+import os
+import sys
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+# Re-run under the repo's venv so slack_sdk and dotenv are importable.
+VENV_PY = ROOT / ".venv" / "bin" / "python"
+if VENV_PY.exists() and pathlib.Path(sys.prefix).resolve() != VENV_PY.parent.parent.resolve():
+    os.execv(str(VENV_PY), [str(VENV_PY), __file__, *sys.argv[1:]])
+sys.path.insert(0, str(ROOT))
+from slack_helpers import post_text
+
+args = sys.argv[1:]
+if not args:
+    sys.exit("usage: slack-post <text>  (or '-' to read stdin)")
+if args == ["-"]:
+    text = sys.stdin.read()
+else:
+    text = " ".join(args)
+post_text(text)

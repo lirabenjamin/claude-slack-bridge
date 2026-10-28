@@ -1,0 +1,6 @@
+slack_bolt>=1.18
+python-dotenv>=1.0
+PyYAML>=6.0
+fastapi>=0.110
+uvicorn>=0.27
+websocket-client>=1.8

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Print the current Pip bookmark URL: cloudflared tunnel + auth token.
+# Useful after a Mac restart, when the trycloudflare URL has rotated.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+LOG="$ROOT/cloudflared.log"
+TOKEN_FILE="$ROOT/.pip_token"
+
+if [[ ! -f "$TOKEN_FILE" ]]; then
+  echo "no .pip_token yet — start the bridge first" >&2
+  exit 1
+fi
+if [[ ! -f "$LOG" ]]; then
+  echo "no cloudflared.log yet — is the tunnel running?" >&2
+  exit 1
+fi
+
+URL=$(grep -oE 'https://[a-z0-9-]+\.trycloudflare\.com' "$LOG" | tail -1)
+TOKEN=$(cat "$TOKEN_FILE")
+
+if [[ -z "$URL" ]]; then
+  echo "couldn't find a trycloudflare URL in $LOG" >&2
+  exit 1
+fi
+
+echo "$URL/?t=$TOKEN"

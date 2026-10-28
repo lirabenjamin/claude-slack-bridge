@@ -1,0 +1,14 @@
+{
+  "name": "Pip",
+  "short_name": "Pip",
+  "description": "Thread dashboard for the Claude Code Slack bridge",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1722",
+  "theme_color": "#1a1722",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

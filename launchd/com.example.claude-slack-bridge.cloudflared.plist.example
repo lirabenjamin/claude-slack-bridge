@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Optional launchd agent for the cloudflared quick tunnel that exposes the Pip web UI.
+  Copy to ~/Library/LaunchAgents/com.example.claude-slack-bridge.cloudflared.plist and
+  replace every REPO_DIR with the absolute path of this repo.
+-->
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.example.claude-slack-bridge.cloudflared</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>REPO_DIR/bin/run_cloudflared.sh</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>REPO_DIR/cloudflared.log</string>
+	<key>StandardOutPath</key>
+	<string>REPO_DIR/cloudflared.log</string>
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+	<key>WorkingDirectory</key>
+	<string>REPO_DIR</string>
+</dict>
+</plist>

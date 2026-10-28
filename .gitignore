@@ -1,0 +1,27 @@
+# Secrets and local config
+.env
+.pip_token
+config.yaml
+config.yaml.bak*
+
+# Runtime state
+sessions.json
+sprites.json
+tmp/
+logs_archive/
+*.log
+*.bak*
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Pip frontend
+pip/node_modules/
+pip/dist/
+
+# Local notes
+comms.md
+todo.md
+.DS_Store
